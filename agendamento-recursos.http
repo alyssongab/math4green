@@ -1,0 +1,6 @@
+@agendamento_recursos_HostAddress = http://localhost:5211
+
+GET {{agendamento_recursos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
