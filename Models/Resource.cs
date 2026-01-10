@@ -7,7 +7,7 @@ namespace agendamento_recursos.Models
     {
         [Key]
         public int Id { get; set; }
-        public Boolean isAvailable { get; set; }
+        public bool IsAvailable { get; set; }
         [Required]
         public string Name { get; set; } = null!;
     }
