@@ -16,11 +16,11 @@ namespace agendamento_recursos.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login([FromBody] string email)
+        public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto dto)
         {
             try
             {
-                var userExists = await userService.UserExists(email);
+                var userExists = await userService.UserExists(dto.Email);
 
                 if (!userExists)
                 {
@@ -28,7 +28,7 @@ namespace agendamento_recursos.Controllers
                 }
 
                 var users = await userService.GetAllUsersAsync();
-                var existingUser = users.FirstOrDefault(u => u.Email.ToLowerInvariant().Equals(email.ToLowerInvariant()));
+                var existingUser = users.FirstOrDefault(u => u.Email.ToLowerInvariant().Equals(dto.Email.ToLowerInvariant()));
 
                 return Ok(existingUser);
             }

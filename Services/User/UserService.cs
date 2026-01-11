@@ -25,7 +25,7 @@ namespace agendamento_recursos.Services.User
             {
                 Name = dto.Name.Trim(),
                 Email = dto.Email.ToLowerInvariant(),
-                MinutesPerDay = TimeSpan.FromMinutes(240)
+                MaxMinutesPerDay = 240
             };
             var created = await userRepository.CreateAsync(user);
             return MapToDto(created);
@@ -49,7 +49,7 @@ namespace agendamento_recursos.Services.User
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
-                MinutesPerDay = (int)user.MinutesPerDay.TotalMinutes
+                MaxMinutesPerDay = 240
             };
         }
 
