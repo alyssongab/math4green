@@ -84,5 +84,33 @@ namespace agendamento_recursos.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<BookingDto>>> GetByUser(int userId)
+        {
+            try
+            {
+                var bookings = await bookingService.GetBookingsByUserAsync(userId);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("resource/{resourceId}")]
+        public async Task<ActionResult<IEnumerable<BookingDto>>> GetByResource(int resourceId)
+        {
+            try
+            {
+                var bookings = await bookingService.GetBookingsByResourceAsync(resourceId);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

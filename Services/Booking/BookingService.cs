@@ -99,6 +99,18 @@ namespace agendamento_recursos.Services.Booking
             return booking != null ? MapToDto(booking) : null;
         }
 
+        public async Task<IEnumerable<BookingDto>> GetBookingsByUserAsync(int userId)
+        {
+            var bookings = await bookingRepository.GetByUserIdAsync(userId);
+            return bookings.Select(MapToDto);
+        }
+
+        public async Task<IEnumerable<BookingDto>> GetBookingsByResourceAsync(int resourceId)
+        {
+            var bookings = await bookingRepository.GetByResourceIdAsync(resourceId);
+            return bookings.Select(MapToDto);
+        }
+
         private static BookingDto MapToDto(Models.Booking booking)
         {
             return new BookingDto
