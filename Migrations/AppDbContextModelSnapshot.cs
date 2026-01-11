@@ -26,9 +26,6 @@ namespace agendamento_recursos.Migrations
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("IntervalMinutes")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ResourceId")
                         .HasColumnType("INTEGER");
 
@@ -53,12 +50,12 @@ namespace agendamento_recursos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IntervalMinutes")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("isAvailable")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -75,8 +72,8 @@ namespace agendamento_recursos.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("MinutesPerDay")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("MaxMinutesPerDay")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -84,19 +81,22 @@ namespace agendamento_recursos.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
             modelBuilder.Entity("agendamento_recursos.Models.Booking", b =>
                 {
                     b.HasOne("agendamento_recursos.Models.Resource", "Resource")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("ResourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("agendamento_recursos.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -104,6 +104,16 @@ namespace agendamento_recursos.Migrations
                     b.Navigation("Resource");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("agendamento_recursos.Models.Resource", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("agendamento_recursos.Models.User", b =>
+                {
+                    b.Navigation("Bookings");
                 });
 #pragma warning restore 612, 618
         }

@@ -18,11 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Booking\" />
-    <Folder Include="DTOs\Resource\" />
-    <Folder Include="Repository\Booking\" />
-    <Folder Include="Repository\Resources\" />
-    <Folder Include="Services\Booking\" />
     <Folder Include="Services\Resource\" />
   </ItemGroup>
 
