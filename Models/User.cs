@@ -12,6 +12,8 @@ namespace agendamento_recursos.Models
         [EmailAddress]
         public string Email { get; set; } = null!;
 
-        public TimeSpan MinutesPerDay { get; set; }
+        public int MaxMinutesPerDay { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; } = [];
     }
 }

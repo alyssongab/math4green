@@ -13,12 +13,14 @@ namespace agendamento_recursos.Models
         public int ResourceId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public TimeSpan IntervalMinutes { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; } = null!;
 
         [ForeignKey(nameof(ResourceId))]
         public Resource Resource { get; set; } = null!;
+
+        [NotMapped]
+        public TimeSpan Duration => EndTime - StartTime;
     }
 }

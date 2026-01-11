@@ -7,8 +7,11 @@ namespace agendamento_recursos.Models
     {
         [Key]
         public int Id { get; set; }
-        public bool IsAvailable { get; set; }
         [Required]
         public string Name { get; set; } = null!;
+
+        public int IntervalMinutes { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; } = [];
     }
 }
