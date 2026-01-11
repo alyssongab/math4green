@@ -1,0 +1,13 @@
+﻿using agendamento_recursos.DTOs.Booking;
+
+namespace agendamento_recursos.Services.Booking
+{
+    public interface IBookingService
+    {
+        Task<BookingDto> CreateBookingAsync(CreateBookingDto dto);
+        Task<IEnumerable<BookingDto>> GetAllBookingsAsync();
+        Task<BookingDto?> GetBookingByIdAsync(int id);
+        Task<bool> DeleteBookingAsync(int id);
+
+    }
+}
