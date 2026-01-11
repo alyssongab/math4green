@@ -77,11 +77,12 @@ namespace agendamento_recursos.Repository.Booking
 
         public async Task<bool> HasConflictAsync(int resourceId, DateTime startTime, DateTime endTime, int? excludeBookingId = null)
         {
+            // starttime e endtime já tem o intervalos somados
             // conflito 1: hora inicio da nova reserva < hora final da reserva encontrada
             // conflito 2: hora fim da nova reserva > hora inicio da reserva encontrada
             var query = context.Bookings
                 .Where(b => b.ResourceId == resourceId)
-                .Where(b => startTime < b.EndTime && endTime > b.StartTime);
+                .Where(b => startTime <= b.EndTime && endTime >= b.StartTime);
 
             if (excludeBookingId.HasValue)
             {

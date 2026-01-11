@@ -56,19 +56,17 @@ namespace agendamento_recursos.Services.Booking
             }
 
             // 5. adicionar intervalo de limpeza e verificar conflitos (apenas verificação)
-            var endTimeWithCleaning = dto.EndTime.AddMinutes(resource.IntervalMinutes);
+            //var endTimeWithCleaning = dto.EndTime.AddMinutes(resource.IntervalMinutes);
 
-            // 6. não pode ter 2 reservas no mesmo horário (considerando intervalo de limpeza)
+            // 6. não pode ter conflito de horarios (ja inclui reservas no mesmo horario) (considerando intervalo de limpeza)
             var hasConflict = await bookingRepository.HasConflictAsync(
                 dto.ResourceId,
-                dto.StartTime,
-                endTimeWithCleaning
+                dto.StartTime.AddMinutes(-resource.IntervalMinutes + 1),
+                dto.EndTime.AddMinutes(resource.IntervalMinutes - 1)
             );
 
             if (hasConflict)
-                throw new Exception(
-                    $"Conflito de horário detectado. Este recurso precisa de {resource.IntervalMinutes} minutos " +
-                    $"de intervalo para limpeza/organização após cada uso.");
+                throw new Exception("Conflito de horário detectado.");
 
             // 7. cria agendamento de fato
             var booking = new Models.Booking
