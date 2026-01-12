@@ -50,7 +50,9 @@ namespace agendamento_recursos.Repository.Booking
         {
             return await context.Bookings
                 .Where(b => b.UserId == userId)
+                .Include(b => b.User)     
                 .Include(b => b.Resource)
+                .OrderBy(b => b.StartTime) 
                 .ToListAsync();
         }
 
@@ -58,7 +60,8 @@ namespace agendamento_recursos.Repository.Booking
         {
             return await context.Bookings
                 .Where(b => b.ResourceId == resourceId)
-                .Include(b => b.User)
+                .Include(b => b.User)      
+                .Include(b => b.Resource)  
                 .OrderBy(b => b.StartTime)
                 .ToListAsync();
         }
@@ -90,6 +93,21 @@ namespace agendamento_recursos.Repository.Booking
             }
 
             return await query.AnyAsync();
+        }
+
+        public async Task<IEnumerable<Models.Booking>> GetByResourceAndDateAsync(int resourceId, DateTime date)
+        {
+            var startOfDay = date.Date;
+            var endOfDay = startOfDay.AddDays(1);
+
+            return await context.Bookings
+                .Where(b => b.ResourceId == resourceId &&
+                           b.StartTime >= startOfDay &&
+                           b.StartTime < endOfDay)
+                .Include(b => b.User)
+                .Include(b => b.Resource)
+                .OrderBy(b => b.StartTime)
+                .ToListAsync();
         }
 
     }

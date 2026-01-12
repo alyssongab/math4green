@@ -10,6 +10,6 @@ namespace agendamento_recursos.Services.Booking
         Task<bool> DeleteBookingAsync(int id);
         Task<IEnumerable<BookingDto>> GetBookingsByUserAsync(int userId);
         Task<IEnumerable<BookingDto>> GetBookingsByResourceAsync(int resourceId);
-
+        Task<IEnumerable<BookingDto>> GetBookingsByResourceAndDateAsync(int resourceId, DateTime date);
     }
 }

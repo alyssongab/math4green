@@ -100,11 +100,23 @@ namespace agendamento_recursos.Controllers
         }
 
         [HttpGet("resource/{resourceId}")]
-        public async Task<ActionResult<IEnumerable<BookingDto>>> GetByResource(int resourceId)
+        public async Task<ActionResult<IEnumerable<BookingDto>>> GetByResource(
+                    int resourceId,
+                    [FromQuery] DateTime? date = null)
         {
             try
             {
-                var bookings = await bookingService.GetBookingsByResourceAsync(resourceId);
+                IEnumerable<BookingDto> bookings;
+
+                if (date.HasValue)
+                {
+                    bookings = await bookingService.GetBookingsByResourceAndDateAsync(resourceId, date.Value);
+                }
+                else
+                {
+                    bookings = await bookingService.GetBookingsByResourceAsync(resourceId);
+                }
+
                 return Ok(bookings);
             }
             catch (Exception ex)

@@ -12,5 +12,6 @@ namespace agendamento_recursos.Repository.Booking
         Task<IEnumerable<Models.Booking>> GetByResourceIdAsync(int resourceId);
         Task<IEnumerable<Models.Booking>> GetByUserAndDateAsync(int userId, DateTime date);
         Task<bool> HasConflictAsync(int resourceId, DateTime startTime, DateTime endTime, int? excludeBookingId = null);
+        Task<IEnumerable<Models.Booking>> GetByResourceAndDateAsync(int resourceId, DateTime date);
     }
 }

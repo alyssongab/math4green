@@ -66,7 +66,8 @@ namespace agendamento_recursos.Services.Booking
             );
 
             if (hasConflict)
-                throw new Exception("Conflito de horário detectado.");
+                throw new Exception($"Conflito de horário detectado. " +
+                    $"{resource.Name} tem {resource.IntervalMinutes} minutos de intervalo para limpeza entre cada sessão");
 
             // 7. cria agendamento de fato
             var booking = new Models.Booking
@@ -108,6 +109,12 @@ namespace agendamento_recursos.Services.Booking
         public async Task<IEnumerable<BookingDto>> GetBookingsByResourceAsync(int resourceId)
         {
             var bookings = await bookingRepository.GetByResourceIdAsync(resourceId);
+            return bookings.Select(MapToDto);
+        }
+
+        public async Task<IEnumerable<BookingDto>> GetBookingsByResourceAndDateAsync(int resourceId, DateTime date)
+        {
+            var bookings = await bookingRepository.GetByResourceAndDateAsync(resourceId, date);
             return bookings.Select(MapToDto);
         }
 
